@@ -1,0 +1,106 @@
+/* Puls (pages/Pulse.tsx). Desktop look: status colours --st-*, flame in --heat,
+   heat column + title + meta line. Component CSS loads before app.css, so rules
+   that compete with app.css classes are scoped under .pulse. */
+
+.pulse-hero { display: flex; align-items: center; gap: 18px; padding: 4px 4px 0; }
+.pulse-hero__text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.pulse-hero h1 { font-size: 26px; letter-spacing: -0.01em; }
+.pulse-headline { display: inline-flex; align-items: center; gap: 6px; font-size: 18px; font-weight: 500; line-height: 1.35; }
+.pulse-headline.is-critical { color: var(--danger); }
+.pulse-headline.is-critical svg { color: var(--heat); }
+.pulse-headline.is-warn { color: var(--st-blocked); }
+.pulse-asof { font-size: 12.5px; color: var(--text-faint); }
+
+.pulse .pulse-chips { gap: 6px; }
+.pulse .pulse-chips .chip { min-height: 38px; padding: 0 12px; gap: 7px; }
+.chip-count { color: var(--text-faint); font-variant-numeric: tabular-nums; font-size: 13px; }
+.pulse .pulse-chips .chip.on .chip-count { color: inherit; opacity: 0.7; }
+
+/* landscape: two columns (pressing | the rest); portrait: one */
+.pulse-grid { display: grid; gap: 22px; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 900px) and (min-aspect-ratio: 1/1), (min-width: 1100px) {
+  .pulse-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.pulse-col { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+
+.pulse-sec__hint { font-size: 12.5px; color: var(--text-faint); text-align: right; }
+.st-sec--new .section-label .ring { color: var(--st-new); opacity: 1; }
+.st-sec--heating .section-label .ring { color: var(--st-heating); opacity: 1; }
+.st-sec--blocked .section-label .ring { color: var(--st-blocked); opacity: 1; }
+.st-sec--stable .section-label .ring { color: var(--st-stable); opacity: 1; }
+.st-sec--cooling .section-label .ring { color: var(--st-cooling); opacity: 1; }
+.st-sec--resolved .section-label .ring { color: var(--st-resolved); opacity: 1; }
+
+/* ---- rows ----------------------------------------------------------------- */
+.pulse-li { display: flex; align-items: center; }
+.pulse-row {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  min-height: 60px;
+  padding: 11px 6px 11px 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  color: var(--text);
+}
+.pulse-row:active { background: var(--row-hover); }
+.pulse-heat {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  width: 54px;
+  padding-right: 14px;
+  flex-shrink: 0;
+  height: 21px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.pulse-heat.is-hot { color: var(--heat); font-weight: 600; }
+.num { font-variant-numeric: tabular-nums; }
+.pulse-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.pulse-title { display: flex; align-items: center; gap: 7px; font-size: 15px; font-weight: 500; line-height: 21px; overflow-wrap: anywhere; }
+.pulse-meta { display: flex; flex-wrap: wrap; column-gap: 10px; font-size: 12.5px; line-height: 18px; color: var(--text-muted); }
+.pulse-meta .faint { color: var(--text-faint); }
+.pulse-meta .is-overdue { color: var(--danger); }
+.pulse-chev { align-self: center; color: var(--text-faint); flex-shrink: 0; }
+.pulse-li.is-resolved .pulse-title { color: var(--text-muted); }
+.pulse-check {
+  display: inline-grid;
+  place-items: center;
+  position: relative;
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+  flex-shrink: 0;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 50%;
+  background: none;
+  color: var(--text-faint);
+}
+.pulse-check::before { content: ''; position: absolute; inset: -6px; } /* 44px hit area */
+.pulse-check:active { background: var(--ok); border-color: var(--ok); color: #fff; }
+.pulse-more { padding: 6px 12px; }
+
+/* status words and dots (desktop components.css) */
+.st--new { color: var(--st-new); }
+.st--heating { color: var(--st-heating); }
+.st--blocked { color: var(--st-blocked); }
+.st--stable { color: var(--st-stable); }
+.st--cooling { color: var(--st-cooling); }
+.st--resolved { color: var(--st-resolved); }
+.st-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--text-faint); flex-shrink: 0; }
+.st-bg--new { background: var(--st-new); }
+.st-bg--heating { background: var(--st-heating); }
+.st-bg--blocked { background: var(--st-blocked); }
+.st-bg--stable { background: var(--st-stable); }
+.st-bg--cooling { background: var(--st-cooling); }
+.st-bg--resolved { background: var(--st-resolved); }
+
+/* ---- how heat works ------------------------------------------------------- */
+.pulse-how { color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border); padding-top: 12px; }
+.pulse-how summary { cursor: pointer; min-height: var(--hit); display: flex; align-items: center; color: var(--text-muted); font-weight: 500; }
+.pulse-how p { margin: 4px 0 8px; max-width: 720px; }

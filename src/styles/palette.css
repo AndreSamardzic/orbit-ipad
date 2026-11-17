@@ -1,0 +1,182 @@
+/* Search palette (components/CommandPalette.tsx). Portrait: a near-full-screen
+   sheet that ends above the on-screen keyboard (--pal-vh = visualViewport
+   height). Landscape: a centred panel like the desktop palette. */
+
+.palette-root {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: calc(var(--safe-t) + 10px) calc(var(--safe-r) + 10px) 10px calc(var(--safe-l) + 10px);
+}
+
+.palette-backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--overlay);
+  animation: pal-fade 120ms ease-out;
+}
+
+.palette {
+  position: relative;
+  width: 100%;
+  height: calc(var(--pal-vh, 100dvh) - var(--safe-t) - 20px);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow), 0 24px 60px rgba(0, 0, 0, 0.14);
+  overflow: hidden;
+  animation: pal-rise 160ms var(--ease);
+}
+
+@media (min-width: 900px) and (min-aspect-ratio: 1/1), (min-width: 1100px) {
+  .palette-root { padding-top: max(calc(var(--safe-t) + 16px), 9vh); }
+  .palette {
+    width: min(640px, 100%);
+    height: auto;
+    max-height: min(600px, calc(var(--pal-vh, 100dvh) - 9vh - 24px));
+    border-radius: 14px;
+  }
+  .palette-cancel { display: none; }
+}
+
+:root[data-motion='off'] .palette,
+:root[data-motion='off'] .palette-backdrop { animation: none; }
+
+@keyframes pal-fade { from { opacity: 0; } }
+@keyframes pal-rise { from { opacity: 0; transform: translateY(-8px) scale(0.99); } }
+
+/* ---- input ---------------------------------------------------------------- */
+.palette-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 58px;
+  padding: 0 8px 0 18px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+/* component CSS loads before app.css: out-specify its global input rules */
+.palette .palette-input input,
+.palette .palette-input input:focus {
+  flex: 1;
+  min-width: 0;
+  min-height: 56px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-size: 17px;
+  color: var(--text);
+}
+.palette .palette-input input::placeholder { color: var(--text-faint); }
+.palette-cancel {
+  border: 0;
+  background: none;
+  color: var(--link);
+  min-height: var(--hit);
+  padding: 0 10px;
+  font-size: 16px;
+}
+
+/* ---- list ----------------------------------------------------------------- */
+.palette-list {
+  flex: 1;
+  min-height: 60px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 6px 8px 10px;
+}
+.palette-group {
+  padding: 12px 10px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.palette-row {
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+}
+.palette-row.is-active { background: var(--bg-sunken); }
+.palette-item {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 50px;
+  padding: 5px 10px;
+  border: 0;
+  background: none;
+  text-align: left;
+  color: var(--text);
+  border-radius: 10px;
+}
+.palette-item:active { background: var(--sidebar-active); }
+.palette-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+.palette-row.is-ask .palette-icon { color: var(--link); }
+.palette-text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.palette-title, .palette-sub { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.palette-title { font-size: 15px; }
+.palette-sub { font-size: 12.5px; color: var(--text-faint); }
+.palette-enter { color: var(--text-faint); flex-shrink: 0; }
+.palette-side {
+  display: inline-grid;
+  place-items: center;
+  width: var(--hit);
+  height: var(--hit);
+  margin-right: 3px;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--text-muted);
+}
+.palette-side:active { background: var(--ok); color: #fff; }
+.palette-empty { padding: 22px 12px; color: var(--text-faint); }
+
+/* round task checkbox as the item icon */
+.pal-check { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border-strong); }
+.pal-check.prio-1 { border-color: var(--heat); }
+
+/* ---- keyboard hints (only where a hardware keyboard is likely: landscape) -- */
+.palette-foot { display: none; }
+@media (min-width: 900px) and (min-aspect-ratio: 1/1), (min-width: 1100px) {
+  .palette-foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 9px 16px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-faint);
+    flex-shrink: 0;
+  }
+  .palette-foot span { display: inline-flex; align-items: center; gap: 4px; }
+  .palette-foot kbd {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    min-width: 18px;
+    padding: 1px 4px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg-sunken);
+    color: var(--text-muted);
+  }
+}

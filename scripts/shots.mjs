@@ -12,20 +12,20 @@ const tomorrow = dk(new Date(now.getTime() + 86400000))
 const data = {
   settings: { lang: 'de', theme: 'light', glow: true, motion: true, name: 'Alex', mePose: 'typing', apiKey: '', model: 'claude-opus-5-5', shareContext: true },
   tasks: [
-    { id: 't1', title: 'Hausarbeit Kapitel 3 gliedern', done: false, prio: 1, due: tomorrow, createdAt: 1 },
-    { id: 't2', title: 'Karteikarten Statistik', done: false, prio: 2, createdAt: 2 },
-    { id: 't3', title: 'Bahnticket buchen', done: false, prio: 3, due: dk(new Date(now.getTime() - 86400000)), createdAt: 3 },
-    { id: 't4', title: 'Mail an Studiengangsleitung', done: true, prio: 2, createdAt: 4, doneAt: Date.now() },
+    { id: 't1', title: 'Hausarbeit Kapitel 3 gliedern', done: false, prio: 1, due: tomorrow, createdAt: Date.now() - 3 * 86400000 },
+    { id: 't2', title: 'Karteikarten Statistik', done: false, prio: 2, createdAt: Date.now() - 5 * 86400000 },
+    { id: 't3', title: 'Bahnticket buchen', done: false, prio: 3, due: dk(new Date(now.getTime() - 86400000)), createdAt: Date.now() - 2 * 86400000 },
+    { id: 't4', title: 'Mail an Studiengangsleitung', done: true, prio: 2, createdAt: Date.now() - 86400000, doneAt: Date.now() },
   ],
   notes: [
     { id: 'n1', title: 'Lernplan Klausur', body: '## Woche 1\n- Kapitel 1–3\n- **Übungsblatt 4**\n\n## Woche 2\n- Altklausuren', pinned: true, updatedAt: Date.now() },
     { id: 'n2', title: 'Ideen Bachelorarbeit', body: 'Conversational Analytics?\nKosten pro Anfrage', pinned: false, updatedAt: Date.now() - 86400000 },
   ],
   people: [
-    { id: 'p1', name: 'Lena', pose: 'reading', note: 'Lerngruppe Statistik', tags: ['wi24', 'lerngruppe'], updatedAt: 1 },
-    { id: 'p2', name: 'Jonas', pose: 'running', note: '', tags: ['wi24'], updatedAt: 1, birthday: today.slice(5) },
-    { id: 'p3', name: 'Mira', pose: 'camera', note: '', tags: ['privat'], updatedAt: 1 },
-    { id: 'p4', name: 'Tim', pose: 'coffee', note: '', tags: [], updatedAt: 1 },
+    { id: 'p1', name: 'Lena', pose: 'reading', note: 'Lerngruppe Statistik', tags: ['wi24', 'lerngruppe'], updatedAt: Date.now() - 10 * 86400000 },
+    { id: 'p2', name: 'Jonas', pose: 'running', note: '', tags: ['wi24'], updatedAt: Date.now() - 10 * 86400000, birthday: today.slice(5) },
+    { id: 'p3', name: 'Mira', pose: 'camera', note: '', tags: ['privat'], updatedAt: Date.now() - 10 * 86400000 },
+    { id: 'p4', name: 'Tim', pose: 'coffee', note: '', tags: [], updatedAt: Date.now() - 10 * 86400000 },
   ],
   sources: [
     { id: 's1', name: 'Vorlesungsplan WI24', kind: 'lectures', importedAt: Date.now(), count: 4 },
@@ -53,7 +53,7 @@ for (const [vw, vh, tag] of [[1180, 820, 'land'], [820, 1180, 'port']]) {
     const db = await new Promise((res, rej) => { const r = indexedDB.open('orbit-ipad', 1); r.onupgradeneeded = () => r.result.createObjectStore('kv'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error) })
     await new Promise((res) => { const t = db.transaction('kv', 'readwrite'); for (const [k, v] of Object.entries(data)) t.objectStore('kv').put(v, k); t.oncomplete = res })
   }, data)
-  const routes = tag === 'land' ? ['', 'calendar', 'tasks', 'notes/n1', 'people', 'people/p1', 'ask', 'settings'] : ['', 'calendar', 'tasks', 'notes', 'ask']
+  const routes = tag === 'land' ? ['', 'pulse', 'calendar', 'tasks', 'notes/n1', 'people', 'people/p1', 'ask', 'settings'] : ['', 'pulse', 'calendar', 'tasks', 'notes', 'people', 'ask']
   for (const r of routes) {
     await page.goto(`${BASE}#/${r}`)
     await page.reload()
