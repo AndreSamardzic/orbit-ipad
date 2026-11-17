@@ -2,7 +2,7 @@ import { useData } from './store.ts'
 import type { Lang } from './types.ts'
 
 const de = {
-  'nav.start': 'Start', 'nav.calendar': 'Kalender', 'nav.tasks': 'Aufgaben', 'nav.notes': 'Notizen', 'nav.people': 'Personen', 'nav.ask': 'Fragen', 'nav.settings': 'Einstellungen',
+  'nav.start': 'Start', 'nav.pulse': 'Puls', 'nav.calendar': 'Kalender', 'nav.tasks': 'Aufgaben', 'nav.notes': 'Notizen', 'nav.people': 'Personen', 'nav.ask': 'Fragen', 'nav.settings': 'Einstellungen',
   'greet.morning': 'Guten Morgen', 'greet.day': 'Hallo', 'greet.evening': 'Guten Abend',
   'start.next': 'Als Nächstes', 'start.nothingNext': 'Heute steht nichts mehr an.', 'start.today': 'Heute', 'start.deadlines': 'Fristen', 'start.noDeadlines': 'Keine offenen Fristen.',
   'start.tasks': 'Wichtigste Aufgaben', 'start.noTasks': 'Keine offenen Aufgaben.', 'start.notes': 'Angeheftet', 'start.birthdays': 'Geburtstage', 'start.ask': 'Frag Claude …',
@@ -30,13 +30,13 @@ const de = {
   'set.imported': 'Backup eingespielt.', 'set.importFailed': 'Das ist keine ORBIT-iPad-Sicherung.', 'set.persist': 'Speicher dauerhaft', 'set.persistNo': 'Safari darf den Speicher bei Platzmangel leeren – exportiere ab und zu ein Backup.',
   'set.about': 'Über', 'set.aboutText': 'ORBIT fürs iPad läuft komplett auf diesem Gerät. Keine Arbeitsdaten, kein Server – nur Claude-Anfragen verlassen das iPad, und nur wenn du fragst.',
   'set.install': 'Auf den Home-Bildschirm: In Safari „Teilen“ → „Zum Home-Bildschirm“.', 'set.counts': '{t} Aufgaben · {n} Notizen · {p} Personen · {e} Termine',
-  'common.save': 'Speichern', 'common.cancel': 'Abbrechen', 'common.delete': 'Löschen', 'common.close': 'Schließen', 'common.edit': 'Bearbeiten', 'common.offline': 'Offline',
+  'search.open': 'Suchen', 'common.save': 'Speichern', 'common.cancel': 'Abbrechen', 'common.delete': 'Löschen', 'common.close': 'Schließen', 'common.edit': 'Bearbeiten', 'common.offline': 'Offline',
 } as const
 
 type Key = keyof typeof de
 
 const en: Record<Key, string> = {
-  'nav.start': 'Start', 'nav.calendar': 'Calendar', 'nav.tasks': 'Tasks', 'nav.notes': 'Notes', 'nav.people': 'People', 'nav.ask': 'Ask', 'nav.settings': 'Settings',
+  'nav.start': 'Start', 'nav.pulse': 'Pulse', 'nav.calendar': 'Calendar', 'nav.tasks': 'Tasks', 'nav.notes': 'Notes', 'nav.people': 'People', 'nav.ask': 'Ask', 'nav.settings': 'Settings',
   'greet.morning': 'Good morning', 'greet.day': 'Hello', 'greet.evening': 'Good evening',
   'start.next': 'Up next', 'start.nothingNext': 'Nothing else today.', 'start.today': 'Today', 'start.deadlines': 'Deadlines', 'start.noDeadlines': 'No open deadlines.',
   'start.tasks': 'Top tasks', 'start.noTasks': 'No open tasks.', 'start.notes': 'Pinned', 'start.birthdays': 'Birthdays', 'start.ask': 'Ask Claude …',
@@ -64,7 +64,7 @@ const en: Record<Key, string> = {
   'set.imported': 'Backup restored.', 'set.importFailed': 'This is not an ORBIT iPad backup.', 'set.persist': 'Storage is persistent', 'set.persistNo': 'Safari may clear storage when space runs low — export a backup now and then.',
   'set.about': 'About', 'set.aboutText': 'ORBIT for iPad runs entirely on this device. No work data, no server — only Claude requests leave the iPad, and only when you ask.',
   'set.install': 'Home screen: in Safari tap Share → Add to Home Screen.', 'set.counts': '{t} tasks · {n} notes · {p} people · {e} events',
-  'common.save': 'Save', 'common.cancel': 'Cancel', 'common.delete': 'Delete', 'common.close': 'Close', 'common.edit': 'Edit', 'common.offline': 'Offline',
+  'search.open': 'Search', 'common.save': 'Save', 'common.cancel': 'Cancel', 'common.delete': 'Delete', 'common.close': 'Close', 'common.edit': 'Edit', 'common.offline': 'Offline',
 }
 
 export type TKey = Key

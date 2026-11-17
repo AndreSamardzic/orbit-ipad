@@ -4,6 +4,7 @@ import { Toaster } from './components/ui.tsx'
 import { useData } from './lib/store.ts'
 import { useRoute } from './lib/router.ts'
 import { Start } from './pages/Start.tsx'
+import { Pulse } from './pages/Pulse.tsx'
 import { Calendar } from './pages/Calendar.tsx'
 import { Tasks } from './pages/Tasks.tsx'
 import { Notes } from './pages/Notes.tsx'
@@ -38,7 +39,7 @@ function useRootAttributes() {
 export function App() {
   useRootAttributes()
   const { route } = useRoute()
-  const page = { start: <Start />, calendar: <Calendar />, tasks: <Tasks />, notes: <Notes />, people: <People />, ask: <Ask />, settings: <Settings /> }[route]
+  const page = { start: <Start />, pulse: <Pulse />, calendar: <Calendar />, tasks: <Tasks />, notes: <Notes />, people: <People />, ask: <Ask />, settings: <Settings /> }[route]
   return (
     <>
       <Shell>{page}</Shell>

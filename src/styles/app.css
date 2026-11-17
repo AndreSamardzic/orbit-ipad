@@ -48,7 +48,7 @@ p { margin: 0; }
 }
 .tabbar {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   border-top: 1px solid var(--border);
   background: color-mix(in srgb, var(--sidebar) 92%, transparent);
   backdrop-filter: blur(12px);
@@ -306,3 +306,10 @@ input[type='date'].overdue { color: var(--danger); }
 .md table { border-collapse: collapse; display: block; overflow-x: auto; }
 .md th, .md td { border: 1px solid var(--border); padding: 4px 8px; }
 .md blockquote { border-left: 3px solid var(--border-strong); padding-left: 10px; color: var(--text-muted); }
+
+/* ---- search trigger (palette lives in components/CommandPalette.tsx) ---- */
+.search-trigger { display: flex; align-items: center; gap: 8px; min-height: 40px; margin: 0 0 12px; padding: 0 10px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg-elev); color: var(--text-faint); }
+.search-trigger span { flex: 1; text-align: left; }
+.search-trigger kbd { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); }
+.search-fab { position: fixed; top: calc(var(--safe-t) + 10px); right: calc(var(--safe-r) + 12px); z-index: 20; width: var(--hit); height: var(--hit); border-radius: 50%; border: 1px solid var(--border); background: var(--bg-elev); box-shadow: var(--shadow); display: grid; place-items: center; color: var(--text-muted); }
+@media (min-width: 900px) and (min-aspect-ratio: 1/1), (min-width: 1100px) { .search-fab { display: none; } }

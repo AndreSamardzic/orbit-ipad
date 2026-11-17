@@ -5,9 +5,9 @@ import { dbClear, dbGet, dbSet } from './db.ts'
 import { DEFAULT_SETTINGS, type Data } from './types.ts'
 
 type Key = keyof Data
-const KEYS: Key[] = ['settings', 'tasks', 'notes', 'people', 'sources', 'events', 'chats']
+const KEYS: Key[] = ['settings', 'tasks', 'notes', 'people', 'sources', 'events', 'chats', 'links']
 
-const empty = (): Data => ({ settings: { ...DEFAULT_SETTINGS }, tasks: [], notes: [], people: [], sources: [], events: [], chats: [] })
+const empty = (): Data => ({ settings: { ...DEFAULT_SETTINGS }, tasks: [], notes: [], people: [], sources: [], events: [], chats: [], links: [] })
 
 let state: Data = empty()
 const listeners = new Set<() => void>()

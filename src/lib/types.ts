@@ -75,6 +75,19 @@ export interface Chat {
   updatedAt: number
 }
 
+/** An edge in the people network (undirected; a-b == b-a). */
+export interface PersonLink {
+  id: string
+  a: string
+  b: string
+  label?: string
+  /** 1 = loose, 2 = normal, 3 = close. */
+  strength: 1 | 2 | 3
+}
+
+export type DayMode = 'morning' | 'day' | 'evening'
+export type VoiceMode = 'ptt' | 'conversation'
+
 export type ClaudeModel = 'claude-opus-5-5' | 'claude-sonnet-5-5' | 'claude-haiku-5-5'
 
 export interface Settings {
@@ -88,6 +101,12 @@ export interface Settings {
   model: ClaudeModel
   /** Send today's events, open tasks and pinned notes along with each question. */
   shareContext: boolean
+  /** Start page: null = follow the clock, else the mode held by a tap. */
+  dayModeHold: DayMode | null
+  voiceMode: VoiceMode
+  /** speechSynthesis voice name; '' = best available for the language. */
+  voiceName: string
+  voiceRate: number
 }
 
 export interface Data {
@@ -98,6 +117,7 @@ export interface Data {
   sources: CalSource[]
   events: CalEvent[]
   chats: Chat[]
+  links: PersonLink[]
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -110,4 +130,8 @@ export const DEFAULT_SETTINGS: Settings = {
   apiKey: '',
   model: 'claude-opus-5-5',
   shareContext: true,
+  dayModeHold: null,
+  voiceMode: 'ptt',
+  voiceName: '',
+  voiceRate: 1,
 }
